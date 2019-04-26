@@ -13,8 +13,9 @@ Converts a directory containing BAMs to fastq
 * Must have samtools installed  
 * Fastq files will be created in the same directory  
 ### Usage
-1. cd to the directory containing BAM files  
-2. Run bam_convert.sh  
+> bam_convert.sh \  
+> path/to/fastq \  
+> path/to/bam  
 
 # CVC Script Generator
 Generates a script to run CVC
