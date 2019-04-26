@@ -5,13 +5,26 @@ Checks the quality of a directory of fastqc.html files and outputs warnings/erro
 ### Usage
 1. cd to the directory containing fastqc files  
 2. fastqc_check  
+
 # BAM to FASTQ
 Converts a directory containing BAMs to fastq
 * Must be called from within the directory containing BAM files  
 * If the BAM file is large, submit a job  
 * Must have samtools installed  
 * Fastq files will be created in the same directory  
-
 ### Usage
 1. cd to the directory containing BAM files  
 2. Run bam_convert.sh  
+
+# CVC Script Generator
+Generates a script to run CVC
+* This will output to std:out, so you should redirect output into your script.sh  
+* Cancersample.txt files will need to be changed manually  
+> ex: CVC_script_generator.sh panel_of_normals 27601661 lung jung > /path/to/submits/27601661_lung_pon.sh"
+### USAGE 
+> CVC_script_generator.sh \\  
+> [alignment/panel_of_normals/variant_calling/all] \\  
+> pmid \\  
+> tissue_type \\  
+> author_name  
+> \> script.sh
