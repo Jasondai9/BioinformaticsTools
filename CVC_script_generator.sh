@@ -14,15 +14,15 @@ then
 	cp /restricted/alexandrov-group/shared/precancer_analysis/tissue_types/${TISSUE}/${PMID}_${AUTHOR}_${TISSUE}/*.txt /restricted/alexandrov-group/shared/precancer_analysis/analysis_results/$TISSUE/submits/
 
 	printf "#!/bin/bash \n\n \
-	ConVarCaller.py \\ \n \
-	run \\ \n \
-	$MODE \\ \n \
-	/restricted/alexandrov-group/shared/precancer_analysis/analysis_results/$TISSUE/${PMID}_analyzed_${TISSUE} \\ \n \
-	/projects/ps-lalexandrov/shared/Reference_Genomes/hg38/ \\ \n \
-	/restricted/alexandrov-group/shared/precancer_analysis/tissue_types/${TISSUE}/${PMID}_${AUTHOR}_${TISSUE}/paired_end/ \\ \n \
-	/restricted/alexandrov-group/shared/precancer_analysis/analysis_results/${TISSUE}/submits/${PMID}_${TISSUE}_sample.txt \\ \n \
-	/projects/ps-lalexandrov/shared/gnomAD/af-only-gnomad.hg38.vcf.gz \\ \n \
-	INTERNAL_PON \\ \n \
+	ConVarCaller.py \\\n \
+	run \\\n \
+	$MODE \\\n \
+	/restricted/alexandrov-group/shared/precancer_analysis/analysis_results/$TISSUE/${PMID}_analyzed_${TISSUE} \\\n \
+	/projects/ps-lalexandrov/shared/Reference_Genomes/hg38/ \\\n \
+	/restricted/alexandrov-group/shared/precancer_analysis/tissue_types/${TISSUE}/${PMID}_${AUTHOR}_${TISSUE}/paired_end/ \\\n \
+	/restricted/alexandrov-group/shared/precancer_analysis/analysis_results/${TISSUE}/submits/${PMID}_${TISSUE}_sample.txt \\\n \
+	/projects/ps-lalexandrov/shared/gnomAD/af-only-gnomad.hg38.vcf.gz \\\n \
+	INTERNAL_PON \\\n \
 	hg38.fa\n"
 
 
