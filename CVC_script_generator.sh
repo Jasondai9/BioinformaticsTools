@@ -1,7 +1,7 @@
 #!/bin/bash
 
 USAGE="\nUSAGE:\tCVC_script_generator.sh  [alignment/panel_of_normals/variant_calling/all]  pmid  tissue_type  author_name\n \
-NOTE:\tThis will output to std:out, so you should redirect output into your script.sh\nAlso, cancer samples with sample.txt files named differently will need to be changed manually \
+NOTE:\tThis will output to std:out, so you should redirect output into your script.sh\nAlso, cancer samples with sample.txt files named differently will need to be changed manually \n \
 ex:\tCVC_script_generator.sh panel_of_normals 27601661 lung jung > /path/to/submits/27601661_lung_pon.sh\n\n"
 
 if [ "$1" != "" ] && [ "$2" != "" ] && [ "$3" != "" ] && [ "$4" != "" ]
