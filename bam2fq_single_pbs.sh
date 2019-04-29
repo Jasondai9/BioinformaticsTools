@@ -28,7 +28,7 @@ else
 #PBS -N ${NAME}
 #PBS -V
 
-bam_convert.sh ${PATH_TO_FASTQ} ${PATH_TO_BAM}" > ${NAME}.pbs
+/home/jad054/BioinformaticsTools/bam_convert.sh ${PATH_TO_FASTQ} ${PATH_TO_BAM}" > ${NAME}.pbs
 
 		printf "Done generating ${NAME}.\n"
 	fi
