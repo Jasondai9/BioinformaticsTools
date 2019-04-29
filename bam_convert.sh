@@ -14,5 +14,5 @@ for f in $FILES
 do
 	printf "Converting $f...\n"
 	fname=`basename $f .bam`
-	echo samtools bam2fq -1 $PATH_TO_FASTQ/${fname}_1.fastq -2 $PATH_TO_FASTQ/${fname}_2.fastq $f
+	samtools bam2fq -1 $PATH_TO_FASTQ/${fname}_1.fastq -2 $PATH_TO_FASTQ/${fname}_2.fastq $f
 done
