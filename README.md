@@ -1,3 +1,12 @@
+# BAM2FQ PBS File Generator
+Generated PBS files that when run will convert BAM files to FASTQ files  
+* PBS files will be put in current directory  
+### Usage 
+> bam2fq_pbs_gen.sh \
+> path/to/fastq \
+> path/to/bams \
+> email
+
 # FASTQC Check
 Checks the quality of a directory of fastqc.html files and outputs warnings/errors  
 * Must be called from within the directory containing fastqc files
