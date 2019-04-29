@@ -17,7 +17,7 @@ Checks the quality of a directory of fastqc.html files and outputs warnings/erro
 
 # BAM to FASTQ
 Converts a directory containing BAMs to fastq
-* If the BAM file is large, submit a job  
+* If the BAM file is large, use the PBS generator and submit that instead
 * Must have samtools installed  
 ### Usage
 > bam_convert.sh \  
