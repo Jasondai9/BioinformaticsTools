@@ -28,7 +28,11 @@ else
 #PBS -N ${NAME}
 #PBS -V
 
-/home/jad054/BioinformaticsTools/bam_convert.sh ${PATH_TO_FASTQ} ${PATH_TO_BAM}" > ${NAME}.pbs
+
+/usr/bin/time -v sh -c '
+/home/jad054/BioinformaticsTools/bam_convert.sh ${PATH_TO_FASTQ} ${PATH_TO_BAM}
+'" > ${NAME}.pbs
+
 
 		printf "Done generating ${NAME}.\n"
 	fi
