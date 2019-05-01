@@ -1,6 +1,6 @@
 #!/bin/bash
 
-if [ "$1" == "" ] || ["$2" == ""]; then
+if [ "$1" == "" ] || [ "$2" == "" ]; then
     USAGE="USAGE: bam_convert.sh [path/to/fastq] [path/to/bam/directory]\n*Path to BAM directory should be a folder containing BAM files\n"
     printf "$USAGE"
 else
