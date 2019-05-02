@@ -1,7 +1,7 @@
 #!/bin/bash
 
 if [ "$1" == "" ] || ["$2" == ""] || ["$3" == ""] || ["$4" == ""]; then
-    USAGE="USAGE: bam_convert.sh [path/to/fastq] [path/to/bam/directory] [email] [job name]\n*Path to BAM directory should be a folder containing BAM files\n"
+    USAGE="USAGE: bam2fq_single_pbs.sh [path/to/fastq] [path/to/bam/directory] [email] [job name]\n*Path to BAM directory should be a folder containing BAM files\n"
     printf "$USAGE"
 else
 	PATH_TO_FASTQ="$1"
