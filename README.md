@@ -1,3 +1,16 @@
+# BAM check
+Checks the flagstat files for each BAM file in the current directory and prints out stats for either all of the files or just the ones that may be problematic (default).  
+* Problematic means there are less than 1000 passed reads or positive failed reads  
+### Usage 
+To view all:
+> cd /path/to/bams  
+> bam_check all  
+
+To view problematic (default):  
+> cd /path/to/bams  
+> bam_check  
+
+
 # BAM2FQ PBS File Generator
 Generated PBS files that when run will convert BAM files to FASTQ files  
 * PBS files will be put in current directory  
