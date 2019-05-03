@@ -52,7 +52,7 @@ Generates a script to run CVC
 > author_name  
 > \> script.sh
 
-# Align Check
+# Alignment Check
 Checks to make sure there are enough files generated in the bam folder for each sample, eg each sample should have 10 files associated with it. It puts the sample names that do not have enough files into missing_files.txt
 * Must be called when inside the bam folder
 ### Usage
