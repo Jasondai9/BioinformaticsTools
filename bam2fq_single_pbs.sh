@@ -33,7 +33,7 @@ else
 /home/jad054/BioinformaticsTools/bam_convert.sh ${PATH_TO_FASTQ} ${PATH_TO_BAM}
 '" > ${NAME}.pbs
 
-
+		chmod 755 ${NAME}.pbs
 		printf "Done generating ${NAME}.\n"
 	fi
 fi

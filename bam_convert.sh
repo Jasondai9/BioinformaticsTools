@@ -15,7 +15,7 @@ else
 		printf "Converting $f...\n"
 		fname=`basename $f .bam`
 
-		samtools bam2fq -1 ${PATH_TO_FASTQ}/${fname}_1.fastq -2 ${PATH_TO_FASTQ}/${fname}_2.fastq $f
+		samtools fastq -1 ${PATH_TO_FASTQ}/${fname}_1.fastq -2 ${PATH_TO_FASTQ}/${fname}_2.fastq $f
 		printf "Finished converting ${fname}\n"
 	done
 fi
