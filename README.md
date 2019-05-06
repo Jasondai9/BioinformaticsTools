@@ -50,7 +50,6 @@ Generates a script to run CVC
 > pmid \\  
 > tissue_type \\  
 > author_name  
-> \> script.sh
 
 # Alignment Check
 Checks to make sure there are enough files generated in the bam folder for each sample, eg each sample should have 10 files associated with it. It puts the sample names that do not have enough files into missing_files.txt
