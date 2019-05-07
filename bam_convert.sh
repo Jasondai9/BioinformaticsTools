@@ -1,13 +1,16 @@
 #!/bin/bash
 
 if [ "$1" == "" ] || [ "$2" == "" ]; then
-    USAGE="USAGE: bam_convert.sh [path/to/fastq] [path/to/bam/directory]\n*Path to BAM directory should be a folder containing BAM files\n"
+    USAGE="USAGE: bam_convert.sh [path/to/fastq] [path/to/bam/directory]\n*Path to BAM directory should be a folder containing BAM files\n
+	Can optionally pass in a txt file"
     printf "$USAGE"
 else
 	PATH_TO_FASTQ="$1"
 	PATH_TO_BAM="$2"
 
 	FILES=$2/*.bam
+	if [ "$3" != "" ]; then
+		FILES=$(cat $3)
 
 	#No confirmation
 	for f in $FILES

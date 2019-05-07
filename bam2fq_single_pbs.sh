@@ -20,7 +20,7 @@ else
 	then
 		printf "#PBS -q home-alexandrov
 #PBS -l nodes=1:ppn=28:skylake
-#PBS -l walltime=120:00:00
+#PBS -l walltime=1000:00:00
 #PBS -m bea
 #PBS -M ${EMAIL}
 #PBS -o ${NAME}.o
