@@ -2,7 +2,10 @@
 
 #align_check.sh name_of_submit_folder
 #must be called from bam folder in analyzed sample directory
+
+#gig is min bam file size
 gig=1000000000
+
 echo "Incomplete tumor samples:" > missing_files.txt
 echo "Too small tumor final bams:" > small_bams.txt
 for tsample in $(sed 1d ../../submits/$1/*.txt | cut -f2)
@@ -51,4 +54,20 @@ do
 	fi
 done
 
+cp missing_files.txt problems.txt
+cat small_bams.txt >> problems.txt 
 
+grep -v "Incomplete" missing_files.txt > temp.txt
+grep -v "bams" small_bams.txt >> temp.txt
+sort temp.txt | uniq > bad_samples.txt
+grep "sample" ../../submits/$1/*.txt | cut -f 1-3 > names_bad_samples.txt
+
+while read sample;
+do
+	grep $sample ../../submits/$1/*.txt | cut -f 1-3 >> names_bad_samples.txt
+done < bad_samples.txt
+
+rm temp.txt
+rm bad_samples.txt
+rm missing_files.txt
+rm small_bams.txt
