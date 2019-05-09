@@ -6,8 +6,8 @@
 #gig is min bam file size
 gig=1000000000
 
-echo "Incomplete tumor samples:" > missing_files.txt
-echo "Too small tumor final bams:" > small_bams.txt
+echo "INCOMPLETE tumor samples:" > missing_files.txt
+echo "TOO SMALL tumor final.bams:" > small_bams.txt
 for tsample in $(sed 1d ../../submits/$1/*.txt | cut -f2)
 do
 	tcount=$(ls -l $tsample* | wc -l) 
@@ -15,7 +15,7 @@ do
 	if [ "$tcount" -eq 10 ];then
 		echo "$tsample" "has enough files"
 	else
-		echo "$tsample" "is missing files! See missing_files.txt"
+		echo "$tsample" "is MISSING FILES! See problems.txt"
 		echo "$tsample" >> missing_files.txt
 	fi
 
@@ -25,13 +25,13 @@ do
 	if [ "$sizefinalbam" -gt "$sizebam" ] && [ "$sizebam" -gt "$gig" ];then
 		echo "$tsample" "final bam is acceptable size"
 	else
-		echo "$tsample" "final bam is not acceptable size! See small_bams.txt"
+		echo "$tsample" "final bam is NOT ACCEPTABLE SIZE! See problems.txt"
 		echo "$tsample" >> small_bams.txt
 	fi
 done
 
-echo "Incomplete normal samples:" >> missing_files.txt
-echo "Too small normal final bams:" >> small_bams.txt
+echo "INCOMPLETE normal samples:" >> missing_files.txt
+echo "TOO SMALL normal final.bams:" >> small_bams.txt
 for nsample in $(sed 1d ../../submits/$1/*.txt | cut -f3)
 do
 	ncount=$(ls -l $nsample* | sort | uniq | wc -l) 
@@ -39,7 +39,7 @@ do
 	if [ "$ncount" -eq 10 ];then
 		echo "$nsample" "has enough files"
 	else
-		echo "$nsample" "is missing files! See missing_files.txt"
+		echo "$nsample" "is MISSING FILES! See problems.txt"
 		echo "$nsample" >> missing_files.txt
 	fi
 
@@ -49,7 +49,7 @@ do
 	if [ "$sizefinalbam" -gt "$sizebam" ] && [ "$sizebam" -gt "$gig" ];then
 		echo "$nsample" "final bam is acceptable size"
 	else
-		echo "$nsample" "final bam is not acceptable size! See small_bams.txt"
+		echo "$nsample" "final bam is NOT ACCEPTABLE SIZE! See problems.txt"
 		echo "$nsample" >> small_bams.txt
 	fi
 done
