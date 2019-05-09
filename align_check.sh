@@ -7,7 +7,7 @@
 gig=1000000000
 
 echo "INCOMPLETE tumor samples:" > missing_files.txt
-echo "TOO SMALL tumor final.bams:" > small_bams.txt
+echo "TOO SMALL tumor final bams:" > small_bams.txt
 for tsample in $(sed 1d ../../submits/$1/*.txt | cut -f2)
 do
 	tcount=$(ls -l $tsample* | wc -l) 
@@ -31,7 +31,7 @@ do
 done
 
 echo "INCOMPLETE normal samples:" >> missing_files.txt
-echo "TOO SMALL normal final.bams:" >> small_bams.txt
+echo "TOO SMALL normal final bams:" >> small_bams.txt
 for nsample in $(sed 1d ../../submits/$1/*.txt | cut -f3)
 do
 	ncount=$(ls -l $nsample* | sort | uniq | wc -l) 
@@ -57,7 +57,7 @@ done
 cp missing_files.txt problems.txt
 cat small_bams.txt >> problems.txt 
 
-grep -v "Incomplete" missing_files.txt > temp.txt
+grep -v "INCOMPLETE" missing_files.txt > temp.txt
 grep -v "bams" small_bams.txt >> temp.txt
 sort temp.txt | uniq > bad_samples.txt
 grep "sample" ../../submits/$1/*.txt | cut -f 1-3 > names_bad_samples.txt
