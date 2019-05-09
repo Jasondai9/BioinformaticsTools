@@ -1,3 +1,6 @@
+# A collection of short scripts for use with the ConsensusVariantCaller pipeline
+
+
 # BAM check
 Checks the flagstat files for each BAM file in the current directory and prints out stats for either all of the files or just the ones that may be problematic (default).  
 * Problematic means there are less than 1000 passed reads or positive failed reads  
@@ -9,7 +12,6 @@ To view all:
 To view problematic (default):  
 > cd /path/to/bams  
 > bam_check  
-
 
 # BAM2FQ PBS File Generator
 Generated PBS files that when run will convert BAM files to FASTQ files  
@@ -48,4 +50,26 @@ Generates a script to run CVC
 > pmid \\  
 > tissue_type \\  
 > author_name  
-> \> script.sh
+
+# Alignment Check
+Checks to make sure there are enough files generated in the bam folder for each sample, eg each sample should have 10 files associated with it. It puts the sample names that do not have enough files into missing_files.txt
+* Must be called when inside the bam folder
+### Usage
+> align_check.sh name_of_submit_folder
+
+# Number of Normals
+Checks to make sure that the number of normals matches the number of PONs generated, eg are there enough PONs for that batch. 
+* Must be called when inside the PON folder
+### Usage
+> num_norms.sh name_of_submit_folder
+
+# Delete jobs
+Will delete all jobs within the range of the job IDs provided. 
+### Usage
+> del_jobs.sh lower_lim upper_lim
+
+# Count Variants
+Will count and display variants for all merged vcfs. Displays SNVs and indels separately.
+* Must be called when inside the consensus_vcf folder
+### Usage
+> count_vc.sh
