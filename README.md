@@ -73,3 +73,9 @@ Will count and display variants for all merged vcfs. Displays SNVs and indels se
 * Must be called when inside the consensus_vcf folder
 ### Usage
 > count_vc.sh
+
+# BamCoverage Strand Identification
+Will calculate total coverage, forward coverage, and reverse coverage for the input minibam. Output a file called combined.bedgraph that is structured as such:
+chr#  bin_start bin_end total_coverage  fwd_coverage  rev_coverage
+### Usage
+> bamCoverage_strands.sh /absolute/path/to/.minibam
