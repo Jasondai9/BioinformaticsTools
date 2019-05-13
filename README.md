@@ -52,7 +52,7 @@ Generates a script to run CVC
 > author_name  
 
 # Alignment Check
-Checks to make sure there are enough files generated in the bam folder for each sample, eg each sample should have 10 files associated with it. It puts the sample names that do not have enough files into missing_files.txt
+Checks to make sure there are enough files generated in the bam folder for each sample, ie each sample should have 10 files associated with it. It will also check to make sure the bam files are larger than 1GB and that the final bam files are larger than the bam files. It puts the samplew that do not have enough files and the samples that are too small into problems.txt. It also creates names_bad_samples.txt so you can more easily identify which samples failed. 
 * Must be called when inside the bam folder
 ### Usage
 > align_check.sh name_of_submit_folder
@@ -73,3 +73,9 @@ Will count and display variants for all merged vcfs. Displays SNVs and indels se
 * Must be called when inside the consensus_vcf folder
 ### Usage
 > count_vc.sh
+
+# BamCoverage Strand Identification
+Will calculate total coverage, forward coverage, and reverse coverage for the input minibam. Output a file called combined.bedgraph that is structured as such:
+chr#  bin_start bin_end total_coverage  fwd_coverage  rev_coverage
+### Usage
+> bamCoverage_strands.sh /absolute/path/to/.minibam
