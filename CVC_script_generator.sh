@@ -1,8 +1,8 @@
 #!/bin/bash
 
 USAGE="\nUSAGE:\tCVC_script_generator.sh  [alignment/panel_of_normals/variant_calling/all]  pmid  tissue_type  author_name  diseaseID [optional: cancer]\n
-NOTE:\tThis will output to std:out, so you should redirect output into your script.sh\nAlso, cancer samples with sample.txt files named differently will need to be changed manually \n
-ex:\tCVC_script_generator.sh panel_of_normals 27601661 lung jung SH \n\n"
+ex:\tCVC_script_generator.sh panel_of_normals 27601661 lung jung SH 
+ex cancer: CVC_script_generator.sh variant_calling 29486792 esophagus galipeau BE cancer\n\n"
 
 
 if [ "$1" != "" ] && [ "$2" != "" ] && [ "$3" != "" ] && [ "$4" != "" ] && [ "$5" != "" ] 
@@ -17,7 +17,7 @@ then
 	#mkdir /restricted/alexandrov-group/shared/precancer_analysis/analysis_results/$TISSUE/submits/${PMID}_${DISEASE}
 	cp /restricted/alexandrov-group/shared/precancer_analysis/tissue_types/${TISSUE}/${PMID}_${AUTHOR}_${TISSUE}/${SAMPLE_FILE} /restricted/alexandrov-group/shared/precancer_analysis/analysis_results/$TISSUE/submits/${PMID}_${DISEASE}
 
-	if ["MODE" == "variant_calling"]
+	if [ "MODE" == "variant_calling" ]
 	then
 	printf "#!/bin/bash \n\n
 ConVarCaller.py \\

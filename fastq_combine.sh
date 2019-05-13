@@ -19,8 +19,8 @@ else
 
 	for index in "${!in1_arr[@]}"
 	do
-		echo "cat ${INDIR}/${in1_arr[index]} >> ${OUTDIR}/${out1_arr[index]}"
-		echo "cat ${INDIR}/${in2_arr[index]} >> ${OUTDIR}/${out2_arr[index]}"
+		cat ${INDIR}/${in1_arr[index]} >> ${OUTDIR}/${out1_arr[index]}
+		cat ${INDIR}/${in2_arr[index]} >> ${OUTDIR}/${out2_arr[index]}
 	done
 	
 fi
