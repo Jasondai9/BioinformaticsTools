@@ -10,7 +10,7 @@ echo "INCOMPLETE tumor samples:" > missing_files.txt
 echo "TOO SMALL tumor final bams:" > small_bams.txt
 for tsample in $(sed 1d ../../submits/$1/*.txt | cut -f2)
 do
-	tcount=$(ls -l $tsample{_,.}* | wc -l) 
+	tcount=$(ls -l ${tsample}{_,.}* | wc -l) 
 
 	if [ "$tcount" -eq 10 ];then
 		echo "$tsample" "has enough files"
@@ -34,7 +34,7 @@ echo "INCOMPLETE normal samples:" >> missing_files.txt
 echo "TOO SMALL normal final bams:" >> small_bams.txt
 for nsample in $(sed 1d ../../submits/$1/*.txt | cut -f3)
 do
-	ncount=$(ls -l $nsample{_,.}* | sort | uniq | wc -l) 
+	ncount=$(ls -l ${nsample}{_,.}* | sort | uniq | wc -l) 
 
 	if [ "$ncount" -eq 10 ];then
 		echo "$nsample" "has enough files"
