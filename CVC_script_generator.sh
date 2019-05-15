@@ -24,7 +24,7 @@ ConVarCaller.py \\
 run \\
 $MODE \\
 /restricted/alexandrov-group/shared/precancer_analysis/analysis_results/$TISSUE/${PMID}_analyzed_${TISSUE}_${DISEASE} \\
-/projects/ps-lalexandrov/shared/Reference_Genomes/hg38/ \\
+/restricted/alexandrov-group/shared/Reference_Genomes/hg38/ \\
 /restricted/alexandrov-group/shared/precancer_analysis/tissue_types/${TISSUE}/${PMID}_${AUTHOR}_${TISSUE}/paired_end/ \\
 /restricted/alexandrov-group/shared/precancer_analysis/analysis_results/${TISSUE}/submits/${PMID}_${DISEASE}/${SAMPLE_FILE} \\
 /projects/ps-lalexandrov/shared/gnomAD/af-only-gnomad.hg38.vcf.gz \\
@@ -37,7 +37,7 @@ ConVarCaller.py \\
 run \\
 $MODE \\
 /restricted/alexandrov-group/shared/precancer_analysis/analysis_results/$TISSUE/${PMID}_analyzed_${TISSUE}_${DISEASE} \\
-/projects/ps-lalexandrov/shared/Reference_Genomes/hg38/ \\
+/restricted/alexandrov-group/shared/Reference_Genomes/hg38/ \\
 /restricted/alexandrov-group/shared/precancer_analysis/tissue_types/${TISSUE}/${PMID}_${AUTHOR}_${TISSUE}/paired_end/ \\
 /restricted/alexandrov-group/shared/precancer_analysis/analysis_results/${TISSUE}/submits/${PMID}_${DISEASE}/${SAMPLE_FILE} \\
 /projects/ps-lalexandrov/shared/gnomAD/af-only-gnomad.hg38.vcf.gz \\
