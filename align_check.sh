@@ -66,12 +66,12 @@ cat small_bams.txt >> problems.txt
 grep -v "INCOMPLETE" missing_files.txt > temp.txt
 grep -v "bams" small_bams.txt >> temp.txt
 sort temp.txt | uniq > bad_samples.txt
-grep "sample" ../../submits/$1/*.txt | cut -f 1-3 > names_bad_samples.txt
+grep "sample" ../../submits/$1/*.txt > names_bad_samples.txt
 
 while read sample;
 do
-	grep $sample ../../submits/$1/*.txt | cut -f 1-3 >> names_bad_samples.txt
-done < bad_samples.txt
+	grep $sample ../../submits/$1/*.txt 
+done < bad_samples.txt | sort | uniq >> names_bad_samples.txt
 
 rm temp.txt
 rm bad_samples.txt
