@@ -12,7 +12,7 @@ bamCoverage -b $1 --filterRNAstrand reverse --binSize 50 --skipNAs -of bedgraph 
 
 bamCoverage -b $1 --binSize 50 --skipNAs -of bedgraph -o tot
 
-
+name=$(echo $1 | awk -F "/" '{print $NF}' | cut -f 1 -d '.')
 while read line;do
 
 	bin1=$(echo $line | cut -f 1 -d ' ')
@@ -34,7 +34,7 @@ while read line;do
 		rcount=0
 	fi
 
-	echo -e $bin1 "\t" $bin2 "\t" $bin3 "\t" $tcount "\t" $fcount "\t" $rcount "\n" >> combined.bedgraph
+	echo -e $bin1 "\t" $bin2 "\t" $bin3 "\t" $tcount "\t" $fcount "\t" $rcount "\n" >> $name_combined.bedgraph
 
 	fcount=$()
 	rcount=$()
