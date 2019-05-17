@@ -11,6 +11,11 @@ echo "number of PONs:" "$pon"
 
 if [ "$num" -eq "$pon" ];then
 	echo "enough PONs"
+	for v in *vcf.gz;
+	do cat $v >> PON.vcf.gz; done
+	source activate cvc_py3
+	gatk IndexFeatureFile --feature-file PON.vcf.gz
+	
 elif [ "$num" -gt "$pon" ];then
 	echo "not enough PONs"
 fi
