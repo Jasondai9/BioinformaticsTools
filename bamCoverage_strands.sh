@@ -1,5 +1,5 @@
 #!/bin/bash
-
+#Frances Keer
 
 #makes bedgraph for the input minibam that has total reads per bin, foward reads per bin, and reverse reads per bin. 
 #input absolute path to minibam

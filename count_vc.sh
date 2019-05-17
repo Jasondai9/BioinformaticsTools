@@ -1,4 +1,5 @@
 #!/bin/bash
+#Frances Keer
 
 #usage: bash count_vc.sh, will give num snv and num indels of all files in that directory
 #must be in consensus_vcf directory

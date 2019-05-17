@@ -1,4 +1,5 @@
 #!/bin/bash
+#Frances Keer
 
 #align_check.sh name_of_submit_folder
 #must be called from bam folder in analyzed sample directory

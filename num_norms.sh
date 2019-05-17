@@ -1,4 +1,5 @@
 #!/bin/bash
+#Frances Keer
 
 #num_norms.sh name_of_submit_folder
 #must be called from PON folder in analyzed sample directory
