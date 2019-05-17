@@ -11,9 +11,16 @@ echo "number of PONs:" "$pon"
 
 if [ "$num" -eq "$pon" ];then
 	echo "enough PONs"
+	echo "Generating PON.vcf.gz"
 	for v in *vcf.gz;
-	do cat $v >> PON.vcf.gz; done
+	do 
+		#adds filename to txt file
+		printf "--vcfs $v " >> vcf_files.txt
+	done
 	source activate cvc_py3
+	gatk CreateSomaticPanelOfNormals $(cat vcf_files.txt) -O PON.vcf.gz
+	
+	echo "Indexing PON.vcf.gz"
 	gatk IndexFeatureFile --feature-file PON.vcf.gz
 	
 elif [ "$num" -gt "$pon" ];then
