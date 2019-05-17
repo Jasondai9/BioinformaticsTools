@@ -77,5 +77,14 @@ Will count and display variants for all merged vcfs. Displays SNVs and indels se
 # BamCoverage Strand Identification
 Will calculate total coverage, forward coverage, and reverse coverage for the input minibam. Output a file called combined.bedgraph that is structured as such:
 chr#  bin_start bin_end total_coverage  fwd_coverage  rev_coverage
+
+## Important!
+* In order to use this script, you must git clone from: https://github.com/deeptools/deepTools.git
+* You must then proceed to bedtools/bedtools/writeBedGraph.py
+* On both line 245 and line 252, there are three quotation marks ( """ ), delete these (uncommenting that section of code)
+* Proceed to the top level of the deepTools repository and enter in your command line: pip install -e .
+* Add to your ~/.bashrc: export PATH="/deepTools/bin:$PATH" 
+* Make sure that you don't have deeptools installed from conda in the python environment you will be in while running this script
+
 ### Usage
-> bamCoverage_strands.sh /absolute/path/to/.minibam
+> bamCoverage_strands.sh /absolute/path/to/mini.bam
