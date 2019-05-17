@@ -17,7 +17,7 @@ then
 	#mkdir /restricted/alexandrov-group/shared/precancer_analysis/analysis_results/$TISSUE/submits/${PMID}_${DISEASE}
 	cp /restricted/alexandrov-group/shared/precancer_analysis/tissue_types/${TISSUE}/${PMID}_${AUTHOR}_${TISSUE}/${SAMPLE_FILE} /restricted/alexandrov-group/shared/precancer_analysis/analysis_results/$TISSUE/submits/${PMID}_${DISEASE}
 
-	if [ "MODE" == "variant_calling" ]
+	if [ "MODE" == "variant_calling" ] #use bam folder for raw data for pon and vc and change fastq to bam in sample file
 	then
 	printf "#!/bin/bash \n\n
 ConVarCaller.py \\
@@ -25,10 +25,24 @@ run \\
 $MODE \\
 /restricted/alexandrov-group/shared/precancer_analysis/analysis_results/$TISSUE/${PMID}_analyzed_${TISSUE}_${DISEASE} \\
 /restricted/alexandrov-group/shared/Reference_Genomes/hg38/ \\
-/restricted/alexandrov-group/shared/precancer_analysis/tissue_types/${TISSUE}/${PMID}_${AUTHOR}_${TISSUE}/paired_end/ \\
+/restricted/alexandrov-group/shared/precancer_analysis/analysis_results/$TISSUE/${PMID}_analyzed_${TISSUE}_${DISEASE}/bam/ \\
 /restricted/alexandrov-group/shared/precancer_analysis/analysis_results/${TISSUE}/submits/${PMID}_${DISEASE}/${SAMPLE_FILE} \\
 /projects/ps-lalexandrov/shared/gnomAD/af-only-gnomad.hg38.vcf.gz \\
 /restricted/alexandrov-group/shared/precancer_analysis/analysis_results/$TISSUE/${PMID}_analyzed_${TISSUE}_${DISEASE}/PON/PON.vcf.gz \\
+hg38.fa\n" > /restricted/alexandrov-group/shared/precancer_analysis/analysis_results/$TISSUE/submits/${PMID}_${DISEASE}/${PMID}_${TISSUE}_${MODE}.sh
+
+	elif [ "MODE" == "panel_of_normals" ] #use bam folder for raw data for pon and vc and change fastq to bam in sample file
+	then
+	printf "#!/bin/bash \n\n
+ConVarCaller.py \\
+run \\
+$MODE \\
+/restricted/alexandrov-group/shared/precancer_analysis/analysis_results/$TISSUE/${PMID}_analyzed_${TISSUE}_${DISEASE} \\
+/restricted/alexandrov-group/shared/Reference_Genomes/hg38/ \\
+/restricted/alexandrov-group/shared/precancer_analysis/analysis_results/$TISSUE/${PMID}_analyzed_${TISSUE}_${DISEASE}/bam/ \\
+/restricted/alexandrov-group/shared/precancer_analysis/analysis_results/${TISSUE}/submits/${PMID}_${DISEASE}/${SAMPLE_FILE} \\
+/projects/ps-lalexandrov/shared/gnomAD/af-only-gnomad.hg38.vcf.gz \\
+INTERNAL_PON \\
 hg38.fa\n" > /restricted/alexandrov-group/shared/precancer_analysis/analysis_results/$TISSUE/submits/${PMID}_${DISEASE}/${PMID}_${TISSUE}_${MODE}.sh
 
 	else
