@@ -58,7 +58,7 @@ Checks to make sure there are enough files generated in the bam folder for each 
 > align_check.sh name_of_submit_folder
 
 # Number of Normals
-Checks to make sure that the number of normals matches the number of PONs generated, eg are there enough PONs for that batch. 
+Checks to make sure that the number of normals matches the number of PONs generated, eg are there enough PONs for that batch. If there are enough PONs, the combined PON will be generated
 * Must be called when inside the PON folder
 ### Usage
 > num_norms.sh name_of_submit_folder
