@@ -39,7 +39,7 @@ echo "small bam size for normal samples" >> small_bams_size.txt
 for nsample in $(sed 1d ${samplefile} | cut -f3)
 do
 	ncount=$(ls -l ${bampath}${nsample}{_,.}* | sort | uniq | wc -l) 
-	#unq for normals that are used for multipel samples
+	#unq for normals that are used for multiple samples
 
 	if [ "$ncount" != 10 ];then
 		#echo "Sample $nsample has enough files"
@@ -48,8 +48,8 @@ do
 		echo "$nsample" >> missing_files.txt
 	fi
 
-	sizebam=$(ls -l ${bampath}${nsample}.bam | cut -f 5 -d ' ')
-	sizefinalbam=$(ls -l ${bampath}${nsample}_final.bam | cut -f 5 -d ' ')
+	sizebam=$(ls -l ${bampath}/${nsample}.bam | cut -f 5 -d ' ')
+	sizefinalbam=$(ls -l ${bampath}/${nsample}_final.bam | cut -f 5 -d ' ')
 
 	if [ "$sizefinalbam" -gt "$sizebam" ] && [ "$sizebam" -gt "${oneGB}" ];then
 		echo "Sample ${nsample}'s final bam is acceptable size"
@@ -91,5 +91,7 @@ if [ $c1 -eq 1 ] && [ $c2 -eq 4 ] && [ $c3 -eq 2 ];then
 	rm ${badsamples}
 else
 	echo "Some files failed, the resubmit_alignment_samples.txt has been generated in the directory above"
+	chmod 775 ${badsamples}
 	mv ${badsamples} ../
+
 fi
