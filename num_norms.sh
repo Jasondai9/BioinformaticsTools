@@ -4,6 +4,8 @@
 #num_norms.sh name_of_submit_folder
 #must be called from PON folder in analyzed sample directory
 
+#creates the PON if there are enough PONs
+
 num=$(sed 1d ../../submits/$1/*.txt | cut -f3 | sort | uniq | wc -l)
 pon=$(ls -l *.vcf.gz | sed 1d | wc -l)
 
@@ -23,6 +25,10 @@ if [ "$num" -eq "$pon" ];then
 	
 	echo "Indexing PON.vcf.gz"
 	gatk IndexFeatureFile --feature-file PON.vcf.gz
+
+	#clean up
+	rm vcf_files.txt
+	chmod 755 PON.vcf{.gz,.gz.tbi}
 	
 elif [ "$num" -gt "$pon" ];then
 	echo "not enough PONs"
