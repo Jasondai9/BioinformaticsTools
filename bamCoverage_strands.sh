@@ -3,14 +3,14 @@
 
 #makes bedgraph for the input minibam that has total reads per bin, foward reads per bin, and reverse reads per bin. 
 #input absolute path to minibam
-#must be in cvc_py3 environment
+#must be in base environment with source code for deeptools downloaded and set as a path, see readme for more info
 
+bamCoverage -b $1 --filterRNAstrand forward --binSize 1 -p max --skipNAs -of bedgraph -o fwd
 
-bamCoverage -b $1 --filterRNAstrand forward --binSize 50 --skipNAs -of bedgraph -o fwd
+bamCoverage -b $1 --filterRNAstrand reverse --binSize 1 -p max --skipNAs -of bedgraph -o rev
 
-bamCoverage -b $1 --filterRNAstrand reverse --binSize 50 --skipNAs -of bedgraph -o rev
+bamCoverage -b $1 --binSize 1 -p max --skipNAs -of bedgraph -o tot
 
-bamCoverage -b $1 --binSize 50 --skipNAs -of bedgraph -o tot
 
 name=$(echo $1 | awk -F "/" '{print $NF}' | cut -f 1 -d '.')
 while read line;do
@@ -29,12 +29,13 @@ while read line;do
 
 	if [ -z "$fcount" ];then
 		fcount=0
+
 	fi
 	if [ -z "$rcount" ];then
 		rcount=0
 	fi
 
-	echo -e $bin1 "\t" $bin2 "\t" $bin3 "\t" $tcount "\t" $fcount "\t" $rcount "\n" >> $name_combined.bedgraph
+	echo -e $bin1 "\t" $bin2 "\t" $bin3 "\t" $tcount "\t" $fcount "\t" $rcount "\n" >> "$name"_combined.bedgraph
 
 	fcount=$()
 	rcount=$()
@@ -45,3 +46,4 @@ done < tot
 rm tot
 rm fwd
 rm rev
+
