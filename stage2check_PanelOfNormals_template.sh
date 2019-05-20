@@ -20,7 +20,7 @@ if [ "$nnum" -eq "$npon" ];then
 	done
 
 	read -p "Do you want to generate PON.vcf.gz? (y/n)" -n 1 -r
-	printf "\n"
+	printf "\\n"
 	if [[ $REPLY =~ ^[Yy]$ ]]; then
 	echo "Generating PON.vcf.gz"
 	for v in ${ponpath}*vcf.gz;
