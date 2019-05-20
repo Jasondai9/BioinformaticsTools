@@ -17,7 +17,7 @@ then
 	#mkdir /restricted/alexandrov-group/shared/precancer_analysis/analysis_results/$TISSUE/submits/${PMID}_${DISEASE}
 	cp /restricted/alexandrov-group/shared/precancer_analysis/tissue_types/${TISSUE}/${PMID}_${AUTHOR}_${TISSUE}/${SAMPLE_FILE} /restricted/alexandrov-group/shared/precancer_analysis/analysis_results/$TISSUE/submits/${PMID}_${DISEASE}
 
-	if [ "MODE" == "variant_calling" ] #use bam folder for raw data for pon and vc and change fastq to bam in sample file
+	if [ "$MODE" == "variant_calling" ] #use bam folder for raw data for pon and vc and change fastq to bam in sample file
 	then
 	printf "#!/bin/bash \n\n
 ConVarCaller.py \\
@@ -31,7 +31,7 @@ $MODE \\
 /restricted/alexandrov-group/shared/precancer_analysis/analysis_results/$TISSUE/${PMID}_analyzed_${TISSUE}_${DISEASE}/PON/PON.vcf.gz \\
 hg38.fa\n" > /restricted/alexandrov-group/shared/precancer_analysis/analysis_results/$TISSUE/submits/${PMID}_${DISEASE}/${PMID}_${TISSUE}_${MODE}.sh
 
-	elif [ "MODE" == "panel_of_normals" ] #use bam folder for raw data for pon and vc and change fastq to bam in sample file
+	elif [ "$MODE" == "panel_of_normals" ] #use bam folder for raw data for pon and vc and change fastq to bam in sample file
 	then
 	printf "#!/bin/bash \n\n
 ConVarCaller.py \\
