@@ -11,6 +11,7 @@ Generates the submits folder that contains all the scripts pertaining to a proje
 > diseaseID \\  
 > path/to/BioinformaticsTools \\  
 > [cancer]  
+
 If the sample is not a cancer, then leave the last field blank.
 
 ## Testing/Validation  
