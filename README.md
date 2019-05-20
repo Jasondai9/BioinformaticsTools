@@ -1,5 +1,5 @@
 # A collection of short scripts for use with the ConsensusVariantCaller pipeline
-Authors: Jason Dai, Frances Keer, Yuzhou (Evelyn) Tong
+Authors: Jason Dai, Frances Keer, Evelyn Tong, Phoebe He
 
 # BAM check
 Checks the flagstat files for each BAM file in the current directory and prints out stats for either all of the files or just the ones that may be problematic (default).  
