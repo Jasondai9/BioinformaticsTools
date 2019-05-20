@@ -13,7 +13,8 @@ Generates the submits folder that contains all the scripts pertaining to a proje
 > [cancer]  
 If the sample is not a cancer, then leave the last field blank.
 
-# Checks  
+## Testing/Validation  
+Run the tests/checks located in the check folder before moving on from each step.  
 ### Stage 1 - Alignment  
 * Checks the number of files for each sample  
 * Checks the size of the final bam  
