@@ -1,8 +1,8 @@
 #!/bin/bash
 
 
-if [ "$1" != "" ] && [ "$2" != "" ] && [ "$3" != "" ] && [ "$4" != "" ] && [ "$5" != "" ] ; then
-    USAGE="USAGE: generate_scripts.sh pmid  tissue_type  author_name  diseaseID  path/to/BioinformaticsTools  [optional: cancer]"
+if [ "$1" == "" ] && [ "$2" == "" ] && [ "$3" == "" ] && [ "$4" == "" ] && [ "$5" == "" ] ; then
+    USAGE="\nUSAGE: generate_scripts.sh pmid  tissue_type  author_name  diseaseID  path/to/BioinformaticsTools  [optional: cancer]\n\n\n"
     printf "$USAGE"
 else
 
@@ -16,6 +16,7 @@ else
 
 	#Ask for confirmation
 	echo "Please make sure your CVC_script_generator is up-to-date"
+	echo "Also, you must be in login4. If the script cannot mkdir, then it already exists. This is fine."
 	echo
 	echo "PMID is: ${PMID}"
 	echo "Tissue type is: ${TISSUE}"
@@ -46,47 +47,54 @@ else
 		cd /restricted/alexandrov-group/shared/precancer_analysis/analysis_results/${TISSUE}/submits/${PMID}_${DISEASE}/check
 
 		#generate check1
-		CHECK1_TEMPLATE=$(cat ${PATH_TO_TOOLS}/check1_alignment_template.sh)
+		CHECK1_TEMPLATE=$(cat ${PATH_TO_TOOLS}/stage1check_Alignment_template.sh)
 
 		printf "#!/bin/bash
 #Authors: Frances Keer, Phoebe He
-#check1_Alignment.sh 
+#stage1check_Alignment.sh 
 
 bampath=../../../${PMID}_analyzed_${TISSUE}_${DISEASE}/bam/
 samplefile=../${PMID}_${TISSUE}_${CANCER}sample.txt
 badsamples=${PMID}_resubmit_alignment_samples.txt
 
 ${CHECK1_TEMPLATE}
-" > check1_alignment.sh
+" > stage1check_Alignment.sh
+
+
 
 		#generate check2
-		CHECK2_TEMPLATE=$(cat ${PATH_TO_TOOLS}/check2_PanelOfNormals_template.sh)
+		CHECK2_TEMPLATE=$(cat ${PATH_TO_TOOLS}/stage2check_PanelOfNormals_template.sh)
 
 		printf "#!/bin/bash
 #Authors: Frances Keer, Jason Dai, Phoebe He
-#check2_PanelOfNormals.sh
+#stage2check_PanelOfNormals.sh
 
 ponpath=../../../${PMID}_analyzed_${TISSUE}_${DISEASE}/PON/
 samplefile=../${PMID}_${TISSUE}_${CANCER}sample.txt
 badsamples=${PMID}_resubmit_pon_samples.txt
 
 ${CHECK2_TEMPLATE}
-		"
+" > stage2check_PanelOfNormals.sh
+
+
 
 		#generate check3
-		CHECK3_TEMPLATE=$(cat ${PATH_TO_TOOLS}/check3_VariantCalling_template.sh)
+		CHECK3_TEMPLATE=$(cat ${PATH_TO_TOOLS}/stage3check_VariantCalling_template.sh)
 
 		printf "#!/bin/bash
-#Authors: Frances Keer, Jason Dai, Phoebe He
-#check2_PanelOfNormals.sh
+#Authors: Frances Keer, Phoebe He
+#stage3check_VariantCalling.sh
 
-ponpath=../../../${PMID}_analyzed_${TISSUE}_${DISEASE}/PON/
-samplefile=../${PMID}_${TISSUE}_${CANCER}sample.txt
-badsamples=${PMID}_resubmit_pon_samples.txt
+vcfpath=../../../${PMID}_analyzed_${TISSUE}_${DISEASE}/consensus_vcf/
 
-${CHECK2_TEMPLATE}
-		"
+${CHECK3_TEMPLATE}
+" > stage3check_VariantCalling.sh
 
+
+
+		#allow rwx for everyone
+		cd ../..
+		chmod -R 775 ${PMID}_${DISEASE}
 
 	fi
 fi
