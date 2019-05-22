@@ -1,6 +1,33 @@
 # A collection of short scripts for use with the ConsensusVariantCaller pipeline
 Authors: Jason Dai, Frances Keer, Evelyn Tong, Phoebe He
 
+# generate_scripts.sh  
+Generates the submits folder that contains all the scripts pertaining to a project. This uses CVC_script_generator and the template check scripts (stage 1, 2, and 3), so please be sure you have an up-to-date version of those. This must be called from login4. If the submits folder already exists, it's fine, but the program will say it cannot mkdir.  
+### Usage 
+> generate_scripts.sh \\  
+> pmid \\  
+> tissue_type \\  
+> author_name \\  
+> diseaseID \\  
+> path/to/BioinformaticsTools \\  
+> [cancer]  
+
+If the sample is not a cancer, then leave the last field blank.
+
+## Testing/Validation  
+Run the tests/checks located in the check folder before moving on from each step.  
+### Stage 1 - Alignment  
+* Checks the number of files for each sample  
+* Checks the size of the final bam  
+* Creates a txt file containing the failed samples that should be resubmitted.  
+
+### Stage 2 - Panel of Normals  
+* Counts the number of normals in the sample text file and compares that to the number of PONs generated.  
+* Generates the combined PON if there are no missing PONs.  
+
+### Stage 3 - Variant Calling  
+* Reports the number of SNVs and indels for each sample.  
+
 # BAM check
 Checks the flagstat files for each BAM file in the current directory and prints out stats for either all of the files or just the ones that may be problematic (default).  
 * Problematic means there are less than 1000 passed reads or positive failed reads  
