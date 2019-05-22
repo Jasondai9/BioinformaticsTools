@@ -1,5 +1,7 @@
 #!/bin/bash
 
+#Jason Dai
+
 USAGE="\nUSAGE:\tCVC_script_generator.sh  [alignment/panel_of_normals/variant_calling/all]  pmid  tissue_type  author_name  diseaseID [optional: cancer]\n
 ex:\tCVC_script_generator.sh panel_of_normals 27601661 lung jung SH 
 ex cancer: CVC_script_generator.sh variant_calling 29486792 esophagus galipeau BE cancer\n\n"
@@ -12,7 +14,8 @@ then
 	TISSUE=$3
 	AUTHOR=$4
 	DISEASE=$5
-	SAMPLE_FILE=${PMID}_${TISSUE}_$6sample.txt
+	CANCER=$6
+	SAMPLE_FILE=${PMID}_${TISSUE}_${CANCER}sample.txt
 
 	#mkdir /restricted/alexandrov-group/shared/precancer_analysis/analysis_results/$TISSUE/submits/${PMID}_${DISEASE}
 	cp /restricted/alexandrov-group/shared/precancer_analysis/tissue_types/${TISSUE}/${PMID}_${AUTHOR}_${TISSUE}/${SAMPLE_FILE} /restricted/alexandrov-group/shared/precancer_analysis/analysis_results/$TISSUE/submits/${PMID}_${DISEASE}
