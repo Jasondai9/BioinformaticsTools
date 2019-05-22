@@ -1,7 +1,7 @@
 #!/bin/bash
+#Jason Dai
 
-
-if [ "$1" == "" ] && [ "$2" == "" ] && [ "$3" == "" ] && [ "$4" == "" ] && [ "$5" == "" ] ; then
+if [ "$1" == "" ] || [ "$2" == "" ] || [ "$3" == "" ] || [ "$4" == "" ] || [ "$5" == "" ] ; then
     USAGE="\nUSAGE: generate_scripts.sh pmid  tissue_type  author_name  diseaseID  path/to/BioinformaticsTools  [optional: cancer]\n\n\n"
     printf "$USAGE"
 else
@@ -23,7 +23,7 @@ else
 	echo "lowercase author's name is: ${AUTHOR}"
 	echo "Disease ID is: ${DISEASE}"
 	echo "Path to BioinformaticsTools is: $PATH_TO_TOOLS"
-	if [ "$5" != "" ]; then
+	if [ "$CANCER" == "" ]; then
 		echo "Sample is not cancerous"
 	else
 		echo "Sample is cancerous"
