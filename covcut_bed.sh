@@ -1,4 +1,5 @@
 #!/bin/bash
+#cuts bedfiles to be only the first three lines and also gives coverage for each bedfile in coverage.txt 
 
 
 for file in "$@"; do
