@@ -7,7 +7,7 @@ Generates the submits folder that contains all the scripts pertaining to a proje
 > specific_generate_scripts.sh \\  
 > path/to/input/directory \\  
 > path/to/output/directory \\  
-> samples_text_file \\
+> samples_text_file \\  
 > path/to/BioinformaticsTools \\  
 
 
