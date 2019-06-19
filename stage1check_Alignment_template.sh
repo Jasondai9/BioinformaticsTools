@@ -91,6 +91,7 @@ if [ $c1 -eq 1 ] && [ $c2 -eq 4 ] && [ $c3 -eq 2 ];then
 	rm ${badsamples}
 else
 	echo "Some files failed, the resubmit_alignment_samples.txt has been generated in the directory above"
+	
 	chmod 775 ${badsamples}
 	mv ${badsamples} ../
 

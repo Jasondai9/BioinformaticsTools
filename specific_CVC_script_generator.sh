@@ -2,7 +2,7 @@
 
 #Jason Dai
 
-USAGE="\nUSAGE:\tCVC_script_generator.sh  [alignment/panel_of_normals/variant_calling/all]  input/path  output/path  samples/textfile/path\n\n"
+USAGE="\nUSAGE:\tCVC_script_generator.sh  [alignment/panel_of_normals/variant_calling/all]  input/path  output/path  samples/textfile/path output_file_prefix\n\n"
 
 
 if [ "$1" != "" ] && [ "$2" != "" ] && [ "$3" != "" ] && [ "$4" != "" ]
@@ -11,6 +11,7 @@ then
 	INPUT=$2
 	OUTPUT=$3
 	SAMPLE_FILE=$4
+	PREFIX=${5}_
 
 	if [ "$MODE" == "variant_calling" ] #use bam folder for raw data for pon and vc and change fastq to bam in sample file
 	then
@@ -25,7 +26,7 @@ ${OUTPUT}/bam/ \\
 ${SAMPLE_FILE} \\
 /projects/ps-lalexandrov/shared/gnomAD/af-only-gnomad.hg38.vcf.gz \\
 ${OUTPUT}/PON/PON.vcf.gz \\
-hg38.fa\n" > ${OUTPUT}/submits/variant_calling.sh
+hg38.fa\n" > ${OUTPUT}/submits/${PREFIX}variant_calling.sh
 
 	elif [ "$MODE" == "panel_of_normals" ] #use bam folder for raw data for pon and vc and change fastq to bam in sample file
 	then
@@ -40,7 +41,7 @@ ${OUTPUT}/bam/ \\
 ${SAMPLE_FILE} \\
 /projects/ps-lalexandrov/shared/gnomAD/af-only-gnomad.hg38.vcf.gz \\
 INTERNAL_PON \\
-hg38.fa\n" > ${OUTPUT}/submits/panel_of_normals.sh
+hg38.fa\n" > ${OUTPUT}/submits/${PREFIX}panel_of_normals.sh
 
 	else
 	#alignment
@@ -54,7 +55,7 @@ ${INPUT} \\
 ${SAMPLE_FILE} \\
 /projects/ps-lalexandrov/shared/gnomAD/af-only-gnomad.hg38.vcf.gz \\
 INTERNAL_PON \\
-hg38.fa\n" > ${OUTPUT}/submits/alignment.sh
+hg38.fa\n" > ${OUTPUT}/submits/${PREFIX}alignment.sh
 
 	fi
 chmod 775 -R /restricted/alexandrov-group/shared/precancer_analysis/analysis_results/$TISSUE/submits/${PMID}_${DISEASE}/
