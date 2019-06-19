@@ -56,7 +56,7 @@ ${CHECK1_TEMPLATE}
 
 # if there are files to resubmit, generate the script
 if [ -f \"${badsamples}\" ]; then
-    ${PATH_TO_TOOLS}/specific_CVC_script_generator.sh alignment $INPUT $OUTPUT $SAMPLE_FILE resubmit
+    ${PATH_TO_TOOLS}/specific_CVC_script_generator.sh alignment $INPUT $OUTPUT $SAMPLE_FILE resubmit_
 fi
 " > stage1check_Alignment.sh
 
@@ -77,7 +77,7 @@ ${CHECK2_TEMPLATE}
 
 # if there are files to resubmit, generate the script
 if [ -f \"${badsamples}\" ]; then
-    ${PATH_TO_TOOLS}/specific_CVC_script_generator.sh panel_of_normals $INPUT $OUTPUT $SAMPLE_FILE resubmit
+    ${PATH_TO_TOOLS}/specific_CVC_script_generator.sh panel_of_normals $INPUT $OUTPUT $SAMPLE_FILE resubmit_
 fi
 " > stage2check_PanelOfNormals.sh
 
@@ -96,7 +96,7 @@ ${CHECK3_TEMPLATE}
 
 # if there are files to resubmit, generate the script
 if [ -f \"${badsamples}\" ]; then
-    ${PATH_TO_TOOLS}/specific_CVC_script_generator.sh variant_calling $INPUT $OUTPUT $SAMPLE_FILE resubmit
+    ${PATH_TO_TOOLS}/specific_CVC_script_generator.sh variant_calling $INPUT $OUTPUT $SAMPLE_FILE resubmit_
 fi
 " > stage3check_VariantCalling.sh
 

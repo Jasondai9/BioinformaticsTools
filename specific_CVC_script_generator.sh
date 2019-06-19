@@ -11,7 +11,7 @@ then
 	INPUT=$2
 	OUTPUT=$3
 	SAMPLE_FILE=$4
-	PREFIX=${5}_
+	PREFIX=${5}
 
 	if [ "$MODE" == "variant_calling" ] #use bam folder for raw data for pon and vc and change fastq to bam in sample file
 	then
