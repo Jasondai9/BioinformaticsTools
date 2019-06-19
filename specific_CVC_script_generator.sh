@@ -58,7 +58,7 @@ INTERNAL_PON \\
 hg38.fa\n" > ${OUTPUT}/submits/${PREFIX}alignment.sh
 
 	fi
-chmod 775 -R /restricted/alexandrov-group/shared/precancer_analysis/analysis_results/$TISSUE/submits/${PMID}_${DISEASE}/
+chmod 775 -R ${OUTPUT}/submits/${PREFIX}*.sh
 
 else
     printf "$USAGE"

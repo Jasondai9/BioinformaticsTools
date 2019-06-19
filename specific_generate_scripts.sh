@@ -102,9 +102,9 @@ fi
 
 
 
-		#allow rwx for everyone
-		cd ..
-		chmod -R 755 ${OUTPUT}/submits
+	#allow rwx for everyone
+	cd ..
+	chmod -R 755 ${OUTPUT}/submits
 
 	fi
 fi
