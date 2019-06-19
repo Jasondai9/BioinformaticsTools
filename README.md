@@ -1,6 +1,16 @@
 # A collection of short scripts for use with the ConsensusVariantCaller pipeline
 Authors: Jason Dai, Frances Keer, Evelyn Tong, Phoebe He
 
+# specific_generate_scripts.sh  
+Generates the submits folder that contains all the scripts pertaining to a project. This uses specific_CVC_script_generator.sh and the template check scripts (stage 1, 2, and 3), so please be sure you have an up-to-date version of those. Ignore the mkdir or chmod errors; they are unimportant.
+### Usage  
+> specific_generate_scripts.sh \\  
+> path/to/input/directory \\  
+> path/to/output/directory \\  
+> samples_text_file \\  
+> path/to/BioinformaticsTools \\  
+
+
 # generate_scripts.sh  
 Generates the submits folder that contains all the scripts pertaining to a project. This uses CVC_script_generator and the template check scripts (stage 1, 2, and 3), so please be sure you have an up-to-date version of those. This must be called from login4. If the submits folder already exists, it's fine, but the program will say it cannot mkdir.  
 ### Usage 
