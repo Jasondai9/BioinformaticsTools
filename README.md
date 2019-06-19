@@ -115,3 +115,16 @@ chr#  bin_start bin_end total_coverage  fwd_coverage  rev_coverage
 
 ### Usage
 > bamCoverage_strands.sh /absolute/path/to/mini.bam
+
+# Trim first n lines
+Will trim out the first n lines of each file given to the script
+### Usage
+> trim_first_nlines.sh n file1 file2 file3 ...
+* n is the number of lines you wish to trim
+* will return file1_noheader file2_noheader file3_noheader
+
+# Coverage and Cut bedfiles
+Will cut bedfiles to be only the first three columns and will simultaneously give the coverage for all the bedfiles provided. 
+### Usage
+> covcut_bed.sh file1.bed file2.bed file3.bed
+* will return file1_cut.bed file2_cut.bed file3_cut.bed and coverage.txt
