@@ -27,7 +27,7 @@ else
 		
 		#RUNNING BIOBAMBAM2's BAMTOFASTQ
 		#gzip lvl 6 is default for gzip
-		bamtofastq F=${PATH_TO_FASTQ}/${fname}_1.fastq.gz F2=${PATH_TO_FASTQ}/${fname}_2.gz inputformat=${FILE_TYPE} gz=1 level=6 < $f
+		bamtofastq F=${PATH_TO_FASTQ}/${fname}_1.fastq.gz F2=${PATH_TO_FASTQ}/${fname}_2.fastq.gz inputformat=${FILE_TYPE} gz=1 level=6 < $f
 		
 		printf "Finished converting ${fname}\n"
 		chmod 755 ${PATH_TO_FASTQ}/*.fastq.gz
