@@ -2,9 +2,7 @@
 
 #Jason Dai
 
-USAGE="\nUSAGE:\tCVC_script_generator.sh  [alignment/panel_of_normals/variant_calling/all]  pmid  tissue_type  author_name  diseaseID [optional: cancer]\n
-ex:\tCVC_script_generator.sh panel_of_normals 27601661 lung jung SH 
-ex cancer: CVC_script_generator.sh variant_calling 29486792 esophagus galipeau BE cancer\n\n"
+USAGE="\nUSAGE:\tCVC_script_generator.sh  [alignment/panel_of_normals/variant_calling/all]  input/path  output/path  samples/textfile/path\n\n"
 
 
 if [ "$1" != "" ] && [ "$2" != "" ] && [ "$3" != "" ] && [ "$4" != "" ]
@@ -16,44 +14,48 @@ then
 
 	if [ "$MODE" == "variant_calling" ] #use bam folder for raw data for pon and vc and change fastq to bam in sample file
 	then
+	#variant calling
 	printf "#!/bin/bash \n\n
 ConVarCaller.py \\
 run \\
 $MODE \\
-/restricted/alexandrov-group/shared/precancer_analysis/analysis_results/$TISSUE/${PMID}_analyzed_${TISSUE}_${DISEASE} \\
+${OUTPUT} \\
 /restricted/alexandrov-group/shared/Reference_Genomes/hg38/ \\
-/restricted/alexandrov-group/shared/precancer_analysis/analysis_results/$TISSUE/${PMID}_analyzed_${TISSUE}_${DISEASE}/bam/ \\
-/restricted/alexandrov-group/shared/precancer_analysis/analysis_results/${TISSUE}/submits/${PMID}_${DISEASE}/${SAMPLE_FILE} \\
+${OUTPUT}/bam/ \\
+${SAMPLE_FILE} \\
 /projects/ps-lalexandrov/shared/gnomAD/af-only-gnomad.hg38.vcf.gz \\
-/restricted/alexandrov-group/shared/precancer_analysis/analysis_results/$TISSUE/${PMID}_analyzed_${TISSUE}_${DISEASE}/PON/PON.vcf.gz \\
-hg38.fa\n" > /restricted/alexandrov-group/shared/precancer_analysis/analysis_results/$TISSUE/submits/${PMID}_${DISEASE}/${PMID}_${TISSUE}_${MODE}.sh
+${OUTPUT}/PON/PON.vcf.gz \\
+hg38.fa\n" > ${OUTPUT}/submits/variant_calling.sh
 
 	elif [ "$MODE" == "panel_of_normals" ] #use bam folder for raw data for pon and vc and change fastq to bam in sample file
 	then
+	#pon
 	printf "#!/bin/bash \n\n
 ConVarCaller.py \\
 run \\
 $MODE \\
-/restricted/alexandrov-group/shared/precancer_analysis/analysis_results/$TISSUE/${PMID}_analyzed_${TISSUE}_${DISEASE} \\
+${OUTPUT} \\
 /restricted/alexandrov-group/shared/Reference_Genomes/hg38/ \\
-/restricted/alexandrov-group/shared/precancer_analysis/analysis_results/$TISSUE/${PMID}_analyzed_${TISSUE}_${DISEASE}/bam/ \\
-/restricted/alexandrov-group/shared/precancer_analysis/analysis_results/${TISSUE}/submits/${PMID}_${DISEASE}/${SAMPLE_FILE} \\
+${OUTPUT}/bam/ \\
+${SAMPLE_FILE} \\
 /projects/ps-lalexandrov/shared/gnomAD/af-only-gnomad.hg38.vcf.gz \\
 INTERNAL_PON \\
-hg38.fa\n" > /restricted/alexandrov-group/shared/precancer_analysis/analysis_results/$TISSUE/submits/${PMID}_${DISEASE}/${PMID}_${TISSUE}_${MODE}.sh
+hg38.fa\n" > ${OUTPUT}/submits/panel_of_normals.sh
 
 	else
+	#alignment
 	printf "#!/bin/bash \n\n
 ConVarCaller.py \\
 run \\
 $MODE \\
-/restricted/alexandrov-group/shared/precancer_analysis/analysis_results/$TISSUE/${PMID}_analyzed_${TISSUE}_${DISEASE} \\
+${OUTPUT} \\
 /restricted/alexandrov-group/shared/Reference_Genomes/hg38/ \\
-/restricted/alexandrov-group/shared/precancer_analysis/tissue_types/${TISSUE}/${PMID}_${AUTHOR}_${TISSUE}/paired_end/ \\
-/restricted/alexandrov-group/shared/precancer_analysis/analysis_results/${TISSUE}/submits/${PMID}_${DISEASE}/${SAMPLE_FILE} \\
+${INPUT} \\
+${SAMPLE_FILE} \\
 /projects/ps-lalexandrov/shared/gnomAD/af-only-gnomad.hg38.vcf.gz \\
 INTERNAL_PON \\
-hg38.fa\n" > /restricted/alexandrov-group/shared/precancer_analysis/analysis_results/$TISSUE/submits/${PMID}_${DISEASE}/${PMID}_${TISSUE}_${MODE}.sh
+hg38.fa\n" > ${OUTPUT}/submits/alignment.sh
+
 	fi
 chmod 775 -R /restricted/alexandrov-group/shared/precancer_analysis/analysis_results/$TISSUE/submits/${PMID}_${DISEASE}/
 
