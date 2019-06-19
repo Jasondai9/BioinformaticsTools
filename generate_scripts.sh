@@ -58,6 +58,11 @@ samplefile=../${PMID}_${TISSUE}_${CANCER}sample.txt
 badsamples=${PMID}_resubmit_alignment_samples.txt
 
 ${CHECK1_TEMPLATE}
+
+# if there are files to resubmit, generate the script
+if [ -f \"${badsamples}\" ]; then
+    ${PATH_TO_TOOLS}/specific_CVC_script_generator.sh alignment /restricted/alexandrov-group/shared/precancer_analysis/tissue_types/${TISSUE}/${PMID}_${AUTHOR}_${TISSUE}/paired_end/ ../../../${PMID}_analyzed_${TISSUE}_${DISEASE}/ ../${SAMPLE_FILE} resubmit
+fi
 " > stage1check_Alignment.sh
 
 
@@ -74,6 +79,11 @@ samplefile=../${PMID}_${TISSUE}_${CANCER}sample.txt
 badsamples=${PMID}_resubmit_pon_samples.txt
 
 ${CHECK2_TEMPLATE}
+
+# if there are files to resubmit, generate the script
+if [ -f \"${badsamples}\" ]; then
+    ${PATH_TO_TOOLS}/specific_CVC_script_generator.sh panel_of_normals ../../../${PMID}_analyzed_${TISSUE}_${DISEASE}/bam/ ../../../${PMID}_analyzed_${TISSUE}_${DISEASE}/ ../${SAMPLE_FILE} resubmit
+fi
 " > stage2check_PanelOfNormals.sh
 
 
@@ -88,6 +98,11 @@ ${CHECK2_TEMPLATE}
 vcfpath=../../../${PMID}_analyzed_${TISSUE}_${DISEASE}/consensus_vcf/
 
 ${CHECK3_TEMPLATE}
+
+# if there are files to resubmit, generate the script
+if [ -f \"${badsamples}\" ]; then
+    ${PATH_TO_TOOLS}/specific_CVC_script_generator.sh variant_calling ../../../${PMID}_analyzed_${TISSUE}_${DISEASE}/bam/ ../../../${PMID}_analyzed_${TISSUE}_${DISEASE}/ ../${SAMPLE_FILE} resubmit
+fi
 " > stage3check_VariantCalling.sh
 
 
