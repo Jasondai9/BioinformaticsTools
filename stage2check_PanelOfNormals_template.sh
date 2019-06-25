@@ -1,7 +1,7 @@
 oneMB=1000000
 
 nnum=$(sed 1d ${samplefile}| cut -f3 | sort | uniq | wc -l)
-npon=$(ls -l ${ponpath}*.vcf.gz | sed 1d | wc -l)
+npon=$(ls -l ${ponpath}*.vcf.gz | wc -l)
 
 echo "number of normals:" "$nnum"
 echo "number of PONs:" "$npon"
