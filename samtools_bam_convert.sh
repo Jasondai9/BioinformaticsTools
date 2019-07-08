@@ -1,7 +1,7 @@
 #!/bin/bash
 
 if [ "$1" == "" ] || [ "$2" == "" ]; then
-    USAGE="\nUSAGE: bam_convert.sh [path/to/fastq] [path/to/bam/directory] [OPTIONAL: text file containing path to individual bams] \n
+    USAGE="\nUSAGE: samtools_bam_convert.sh [path/to/fastq] [path/to/bam/directory] [OPTIONAL: text file containing path to individual bams] \n
 	Path to BAM directory should be a folder containing BAM files 
 	Can optionally pass in a txt file containing path to the files \n\n"
     printf "$USAGE"
@@ -21,9 +21,14 @@ else
 		printf "Converting $f...\n"
 		fname=`basename $f .bam`
 		
-		#samtools collate -o ${PATH_TO_FASTQ}/${fname}_collated.bam $f
-		samtools fastq -1 ${PATH_TO_FASTQ}/${fname}_1.fastq.gz -2 ${PATH_TO_FASTQ}/${fname}_2.fastq.gz $f #${PATH_TO_FASTQ}/${fname}_collated.bam
+		samtools collate -o ${PATH_TO_FASTQ}/${fname}_collated.bam $f
+		samtools fastq -N -1 ${PATH_TO_FASTQ}/${fname}_1.fastq.gz -2 ${PATH_TO_FASTQ}/${fname}_2.fastq.gz ${PATH_TO_FASTQ}/${fname}_collated.bam
+		
+		rm ${PATH_TO_FASTQ}/${fname}_collated.bam
+		
 		printf "Finished converting ${fname}\n"
-		chmod 755 ${PATH_TO_FASTQ}/*.fastq.gz
+
+		
 	done
+	chmod 775 ${PATH_TO_FASTQ}/*.fastq.gz
 fi
