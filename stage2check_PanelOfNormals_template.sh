@@ -48,14 +48,14 @@ elif [ "$nnum" -gt "$npon" ];then
 		ls -R ${nsample}.vcf.gz 2>>list_of_normals.txt
 	done
 
-	grep "sample" ${samplefile} > ../${badsamples}
+	grep "sample" ${samplefile} > ${badsamples}
 	for f in $(cat list_of_normals.txt |cut -f4 -d ' ')
 	do
 		fname=`basename $f .vcf.gz:`
 		grep ${fname} ${samplefile} >>${badsamples}
 	done
 	cat ${badsamples}|sort|uniq>temp.txt
-	cat temp.txt >>../${badsamples}
+	cat temp.txt >>${badsamples}
 	rm temp.txt
 	rm list_of_normals.txt
 	rm ${badsamples}
