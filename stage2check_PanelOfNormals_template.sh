@@ -26,7 +26,7 @@ if [ "$nnum" -eq "$npon" ];then
 	for v in ${ponpath}*vcf.gz;
 	do 
 		#adds filename to txt file
-		printf "--vcfs $v " >> vcf_files.txt
+		printf -- "--vcfs $v " >> vcf_files.txt
 	done
 	source activate cvc_py3
 	gatk CreateSomaticPanelOfNormals $(cat vcf_files.txt) -O ${ponpath}PON.vcf.gz
@@ -35,6 +35,8 @@ if [ "$nnum" -eq "$npon" ];then
 	gatk IndexFeatureFile --feature-file ${ponpath}PON.vcf.gz
 	echo "You have successfully generated and indexed the Panel of Normals."
 	echo "You may run the script to submit jobs for stage 3(variant calling) now :)"
+
+	chmod 775 ${ponpath}PON.vcf.*
 	else
 		echo "Everything looks good!"
 		echo "If you have PON.vcf.gz generated and indexed, you may run the script to submit jobs for stage 3(variant calling) now :)"
