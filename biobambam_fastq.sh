@@ -3,7 +3,7 @@
 
 #this script uses biobambam2 to convert bam/cram/sam to fastq
 if [ "$1" == "" ] || [ "$2" == "" ] || [ "$3" == "" ]; then
-    USAGE="\nUSAGE: convert_to_fastq.sh [path/to/fastq] [path/to/input/directory] [bam/cram/sam] [OPTIONAL: text file containing path to individual bams] \n
+    USAGE="\nUSAGE: biobambam_fastq.sh [path/to/fastq] [path/to/input/directory] [bam/cram/sam] [OPTIONAL: text file containing path to individual bams] \n
 	Path to input directory should be a folder containing BAM/CRAM/SAM files 
 	bam/cram/sam must be lowercase
 	Can optionally pass in a txt file containing path to the files \n\n"
@@ -27,7 +27,8 @@ else
 		
 		#RUNNING BIOBAMBAM2's BAMTOFASTQ
 		#gzip lvl 6 is default for gzip
-		bamtofastq F=${PATH_TO_FASTQ}/${fname}_1.fastq.gz F2=${PATH_TO_FASTQ}/${fname}_2.fastq.gz inputformat=${FILE_TYPE} gz=1 level=6 < $f
+		bamsort SO=queryname inputformat=${FILE_TYPE} sortthreads=$(nproc) blockmb=4096 I=$f  O=${PATH_TO_FASTQ}/${fname}_sorted.bam 
+		bamtofastq F=${PATH_TO_FASTQ}/${fname}_1.fastq.gz F2=${PATH_TO_FASTQ}/${fname}_2.fastq.gz inputformat=${FILE_TYPE} gz=1 level=6 < ${PATH_TO_FASTQ}/${fname}_sorted.bam
 		
 		printf "Finished converting ${fname}\n"
 		chmod 775 ${PATH_TO_FASTQ}/*.fastq.gz
