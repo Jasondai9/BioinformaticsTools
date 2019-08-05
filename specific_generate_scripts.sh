@@ -25,9 +25,7 @@ else
 	if [[ $REPLY =~ ^[Yy]$ ]]
 	then
 		#create directories - will not overwrite
-		mkdir ${OUTPUT}
-		mkdir ${OUTPUT}/submits
-		mkdir ${OUTPUT}/submits/check
+		mkdir -p ${OUTPUT}/submits/check
 
 
 		cp $SAMPLE_FILE ${OUTPUT}/submits/

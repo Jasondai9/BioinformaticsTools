@@ -33,10 +33,7 @@ else
 	if [[ $REPLY =~ ^[Yy]$ ]]
 	then
 		#create directories - will not overwrite
-		mkdir /restricted/alexandrov-group/shared/precancer_analysis/analysis_results/${TISSUE}
-		mkdir /restricted/alexandrov-group/shared/precancer_analysis/analysis_results/${TISSUE}/submits
-		mkdir /restricted/alexandrov-group/shared/precancer_analysis/analysis_results/${TISSUE}/submits/${PMID}_${DISEASE}
-		mkdir /restricted/alexandrov-group/shared/precancer_analysis/analysis_results/${TISSUE}/submits/${PMID}_${DISEASE}/check
+		mkdir -p /restricted/alexandrov-group/shared/precancer_analysis/analysis_results/${TISSUE}/submits/${PMID}_${DISEASE}/check
 
 		#generate scripts to run pipeline and copy the sample file
 		${PATH_TO_TOOLS}/CVC_script_generator.sh alignment $PMID $TISSUE $AUTHOR $DISEASE $CANCER
