@@ -15,5 +15,14 @@ else
 	printf "Total num samples: $NUM_SAMPLES\n"
 
 	awk '{print $0 "\t" FILENAME}' ${TISSUE_DIR}/*/consensus_vcf/*all_merged* | grep -v "#" | shuf -n $RANDOM_NUM | sort -k9 > random.txt
-	printf "Random variants saved to random.txt\n\n"
+
+	printf "Random variants saved to random.txt\n"
+
+	#find the minibam and index
+	ls $(cut -f9 random.txt | sed 's/consensus_vcf\//minibam\/**/g' | rev | cut -d_ -f3- | rev | awk '{print $0"**"}') | uniq > files.txt
+	printf "Total num BAMs to download: $(	ls $(cut -f9 random.txt | sed 's/consensus_vcf\//minibam\/**/g' | rev | cut -d_ -f3- | rev | awk '{print $0"**bam"}') | uniq | wc -l)\n"
+	printf "Minibam files to download in files.txt\n\n"
+
+
+	chmod 766 random.txt files.txt
 fi
