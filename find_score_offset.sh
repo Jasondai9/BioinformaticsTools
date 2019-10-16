@@ -37,7 +37,7 @@ else
 	done
 
 
-	rm $OUT/{stats,small}.temp**
+	#rm $OUT/{stats,small}.temp**
 
 	#if there is only one offset value
 	if [ $(cut -f2 $OUT/all_offsets.txt | sort | uniq | wc -l) -eq 1 ]

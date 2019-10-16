@@ -3,7 +3,7 @@
 
 #finds the number of variants called at each step by each variant caller (original and filtered)
 
-USAGE="USAGE: script.sh \\ \ntissue \\ \npmid \\ \npath_to_filtered_consensus_vcf/SNV \\ \noutput_dir \\ \noriginal_bed (sample:chr:pos) \\ \nsample_file\n\n"
+USAGE="USAGE: generate_vc_stats.sh \\ \ntissue \\ \npmid \\ \npath_to_filtered_consensus_vcf/SNV \\ \noutput_dir \\ \noriginal_bed (sample:chr:pos) \\ \nsample_file\n\n"
 
 TISSUE=$1
 PMID=$2
@@ -18,13 +18,17 @@ then
 else
 
 	#create directories
-	mkdir -p $OUT/$TISSUE/{falsenegative,falsepositive,original,missed,original_0,filtered_1,merged_2,mergeFiltered_4,TrueVariant_5}
+	mkdir -p $OUT/{falsenegative,falsepositive,original,missed,original_0,filtered_1,merged_2,mergeFiltered_4,TrueVariant_5}
+	mkdir -p $OUT/falsenegative/{filtered_1,mergeFiltered_4}
+	mkdir -p $OUT/falsepositive/{original_0,filtered_1,merged_2,mergeFiltered_4,TrueVariant_5}
 
 #------------------Generate a samples file----------------
 	grep $PMID $samples_file | cut -d_ -f1 > $OUT/all_samples.txt
 
 #------------------------Original-------------------------
-	echo Original $(date)
+	echo Generating original .bed files
+	echo $(date)
+	echo
 
 	#get original from a bed file sample:chr:pos
 	for variant in $(cat $ORIGINAL)
@@ -37,6 +41,9 @@ else
 	done
 
 #---------------------Get the beds------------------------
+	echo Getting .bed files from $IN
+	echo $(date)
+	echo
 
 	#original_0 and filtered_1
 	for step in {original_0,filtered_1}
@@ -105,7 +112,16 @@ else
 		awk '{print $1":"$2"\t"$7}' ${IN}/mergeFiltered_4/${sample}_${PMID}_filtered.vcf | grep "PASS" | grep -v "#" | sed 's/chr//g' > ${OUT}/falsepositive/mergeFiltered_4/${sample}.bed
 	done
 
+	#TrueVariant_5
+	for sample in $(cat $OUT/all_samples.txt)
+	do
+		awk '{print $1":"$2"\t"$11}' ${IN}/TrueVariant_5/${sample}_${PMID}_true.vcf| grep -v "#" | sed 's/chr//g' > ${OUT}/falsepositive/TrueVariant_5/${sample}.bed
+	done
+
 #---------------------True VCF stats----------------------
+	echo Calculating true.vcf stats
+	echo $(date)
+	echo
 
 	printf "SAMPLE\tTotal_original\tTotal_filtered\tCommon\tMissed\tFalse_positive\n" > $OUT/TrueVCF_stats.txt
 
@@ -117,15 +133,18 @@ else
 		declare -i COMMON=0
 		pname=$OUT/TrueVariant_5/$sample.bed
 
-
+		#create the missed variant file
+		printf "" > $OUT/missed/${sample}.bed
+		
 		#for each original variant, check if its in filtered
 		for line in $(cat $OUT/original/${sample}.bed)
 		do
+			
 			#if the variant is missing from filtered variants
 			if [ $(grep "$line" $pname | wc -l) -eq 0 ]
 			then
 				MISSED=$MISSED+1
-				echo $line >> $OUT/missed/${sample}.bed
+				printf "$line\n" >> $OUT/missed/${sample}.bed
 			else
 				#else the variant is common
 				COMMON=$COMMON+1
@@ -135,11 +154,14 @@ else
 		#false positive=total-original
 		declare -i EXTRA=$(cat $pname | wc -l)-$COMMON
 		declare -i ototal=$MISSED+$COMMON
-		declare -i ftotal=$(cat $pname)
+		declare -i ftotal=$(cat $pname | wc -l)
 		printf "$sample\t$ototal\t$ftotal\t$COMMON\t$MISSED\t$EXTRA\n" >> $OUT/TrueVCF_stats.txt
 	done
 
 #--------Missing variants in original variant call--------
+	echo Finding missing variants found in early steps
+	echo $(date)
+	echo
 	
 	#print header
 	printf "Sample\tTotal_missed\toriginal_mutect\toriginal_strelka\toriginal_varscan\tfiltered_mutect\tfiltered_strelka\tfiltered_varscan\tFound_in_merged\tFound_in_true\n" > $OUT/percentages.txt
@@ -204,14 +226,17 @@ else
 
 
 #--------------------False negative-----------------------
-	
+	echo Finding false negatives
+	echo $(date)
+	echo
+
 	#header
 	printf "Sample\tTotal_missed\tMutect_lowAF\tMutect_lowTLOD\tStrelka_lowAF\tStrelka_lowSomaticEVS\tVarscan_lowAF\tVarscan_lowSCC\tmergeFiltered_lowVAF\tmergeFiltered_nLowCover\tmergeFiltered_tLowCover\n" > $OUT/false_negatives.txt
 
 	#one line per sample
 	for sample in $(cat $OUT/all_samples.txt)
 	do
-		printf "$sample\t$(cat $OUT/missed/${sample}.bed|wc -l)"
+		printf "$sample\t$(cat $OUT/missed/${sample}.bed|wc -l)" >> $OUT/false_negatives.txt
 
 
 		#-----filtered_1-----
@@ -223,7 +248,7 @@ else
 			for line in $(cat $OUT/missed/${sample}.bed)
 			do
 				#if the variant is missing from vc
-				grep $line ${OUT}/falsenegative/filtered_1/${sample}_${variantcaller}.bed | cut -f3 | sed 's/,/\n/g' >> $OUT/falsenegative/filtered_1/${sample}_${variantcaller}.filterstats
+				grep $line ${OUT}/falsenegative/filtered_1/${sample}_${variantcaller}.bed | cut -f2 | sed 's/,/\n/g' >> $OUT/falsenegative/filtered_1/${sample}_${variantcaller}.filterstats
 			done
 		done
 
@@ -244,7 +269,7 @@ else
 		for line in $(cat $OUT/missed/${sample}.bed)
 		do
 			#if the variant is missing from vc
-			grep $line ${OUT}/mergeFiltered_4/${sample}.bed | cut -f3 | sed 's/,/\n/g' >> $OUT/falsenegative/mergeFiltered_4/${sample}.filterstats
+			grep $line ${OUT}/falsenegative/mergeFiltered_4/${sample}.bed | cut -f2 | sed 's/,/\n/g' >> $OUT/falsenegative/mergeFiltered_4/${sample}.filterstats
 		done
 
 		printf "\t$(grep "lowVAF" $OUT/falsenegative/mergeFiltered_4/${sample}.filterstats | wc -l)" >> $OUT/false_negatives.txt
@@ -255,12 +280,20 @@ else
 
 
 #--------------------False Positives----------------------
+	echo Finding false positives
+	echo $(date)
+	echo
 
 
-	for step in {original_0,filtered_1,merged_2,TrueVariant_5}
+	for step in {original_0,filtered_1,merged_2,mergeFiltered_4,TrueVariant_5}
 	do
+		echo Finding false positives for $step
+		echo $(date)
+		echo
 		if [ "$step" == "original_0" ] || [ "$step" == "filtered_1" ]
 		then
+			
+
 			for variantcaller in {mutect,strelka,varscan}
 			do
 				#for each sample in original
@@ -304,14 +337,18 @@ else
 		fi
 	done
 
+	echo Generating false_positives.txt
+	echo $(date)
+	echo
+	
 	#Header
-	printf "Sample\tOriginal_mutect\tOriginal_strelka\tOriginal_varscan\tFiltered_mutect\tFiltered_strelka\tFiltered_varscan\tMerged\tMerge_filtered\n" > $OUT/false_positives.txt
-
+	#printf "Sample\tOriginal_mutect\tOriginal_strelka\tOriginal_varscan\tFiltered_mutect\tFiltered_strelka\tFiltered_varscan\tMerged\tMerge_filtered\tTrueVariant\tRef_depth\tAlt_depth\tVAF\n" > $OUT/false_positives.txt
+	printf "Sample\tOriginal_mutect\tOriginal_strelka\tOriginal_varscan\tFiltered_mutect\tFiltered_strelka\tFiltered_varscan\tMerged\tMerge_filtered\tTrueVariant\n" > $OUT/false_positives.txt
 	#generate a line for each sample
 	for sample in $(cat $OUT/all_samples.txt)
 	do
 		printf "$sample"
-		for step in {original_0,filtered_1,merged_2,mergeFiltered_4}
+		for step in {original_0,filtered_1,merged_2,mergeFiltered_4,TrueVariant_5}
 		do
 			if [ "$step" == "original_0" ] || [ "$step" == "filtered_1" ]
 			then
@@ -323,7 +360,14 @@ else
 				printf "\t$(grep -v "#" $OUT/falsepositive/${step}/${sample}_${step}_fpos.bed | wc -l)"
 			fi
 		done
+
+		#ref depth, alt depth, vaf
+		#printf "\t$(cut -d, -f2 $OUT/falsepositive/TrueVariant_5/${sample}_TrueVariant_5_fpos.bed | cut -d: -f9)"
+		#printf "\t$(cut -d, -f2 $OUT/falsepositive/TrueVariant_5/${sample}_TrueVariant_5_fpos.bed | cut -d: -f10)"
+		#printf "\t$(cut -d, -f2 $OUT/falsepositive/TrueVariant_5/${sample}_TrueVariant_5_fpos.bed | cut -d: -f11)"
 		printf "\n"
 	done >> $OUT/false_positives.txt
 
+	echo Done!
+	echo $(date)
 fi
