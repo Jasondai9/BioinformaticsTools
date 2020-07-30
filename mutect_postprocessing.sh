@@ -1,6 +1,6 @@
 #!/bin/bash
 
-USAGE="\nReorders the normal/tumor columns order to match other variant callers (normal-tumor)\n\tmutect_cleanup.sh \\ \n\tmutect_vcf_file\n\n"
+USAGE="\nReorders the normal/tumor columns order to match other variant callers (normal-tumor)\nOutputs in current directory\n\tmutect_postprocessing.sh \\ \n\tmutect_vcf_file\n\n"
 
 if [ -z "$1" ];then printf "$USAGE"; exit 1; fi
 
@@ -48,17 +48,17 @@ echo Isolating biallelic variants...
 grep -v "#" ${swapped_file} | awk 'BEGIN{OFS="\t";}; $5 ~ /,/ { print }' > ${multiallelic_file}
 grep -v "#" ${swapped_file} | awk 'BEGIN{OFS="\t";}; ! ($5 ~ /,/) { print }' > ${biallelic_file}
 
-
+grep "#" ${swapped_file} > ${indel_file}
 
 echo Separating SNVs and Indels...
 #indels
-awk 'BEGIN{OFS="\t";}; length($4) != length($5) { print }' ${biallelic_file} > ${indel_file}
+awk 'BEGIN{OFS="\t";}; length($4) != length($5) { print }' ${biallelic_file} >> ${indel_file}
 #snvs
 awk 'BEGIN{OFS="\t";}; length($4) == length($5) { print }' ${biallelic_file} > ${snv_file}
 
 
 
-echo Separating multinecleotide SNVs...
+echo Separating multinucleotide SNVs...
 #if len($4) > 1 then this is a group
 awk 'BEGIN{OFS="\t";}; 
 	{if (length($4) > 1) {
@@ -82,6 +82,7 @@ awk 'BEGIN{OFS="\t";};
 #########################
 
 grep "#" ${swapped_file} > ${final_file}
+
 cat $final_vcf >> ${final_file}
 
 chmod 770 $swapped_file $multiallelic_file $biallelic_file $indel_file $snv_file $separated_snvs_file $final_file

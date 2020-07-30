@@ -68,7 +68,6 @@ else
 	do
 		grep "PASS" ${IN}/TrueVariant_5/${sample}_${PMID}_true.vcf | grep -v "#" | awk '{print $1":"$2}' | sed 's/chr//g' > $OUT/TrueVariant_5/$sample.bed
 	done
-
 	#----false negative----
 
 	#filtered_1

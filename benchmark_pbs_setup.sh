@@ -19,11 +19,11 @@ NUMRUNS=$4
 
 if [ -z "$4" ]; then NUMRUNS=5; fi
 
-for ((i = 1; i <= $NUMNODES; i++))
+for ((i = 0; i < $NUMNODES; i++))
 do
 	#reserve 1 hour for each run
 	printf "#PBS -q home-alexandrov
-#PBS -l nodes=1:ppn=28:skylake
+#PBS -l nodes=tscc-11-${i}:ppn=28
 #PBS -l walltime=${NUMRUNS}:00:00
 #PBS -m bea
 #PBS -M jasondai.dev@gmail.com
@@ -57,6 +57,7 @@ do
 	fi
 done
 paste $PBS/jobIDS.txt $PBS/temp > $PBS/nodes.txt
+rm $PBS/temp
 " > $PBS/check_nodes.sh
 
 chmod 775 $PBS/*

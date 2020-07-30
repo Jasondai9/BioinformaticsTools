@@ -25,7 +25,7 @@ else
 		printf "Converting $f START: $(date)\n"
 		fname=`basename $f .${TYPE}`
 		
-		samtools sort -n -o ${PATH_TO_FASTQ}/${fname}_sorted.${TYPE} -m 6G -@$(nproc) $f
+		samtools sort -n -o ${PATH_TO_FASTQ}/${fname}_sorted.${TYPE} -@$(nproc) $f
 		samtools fastq -1 ${PATH_TO_FASTQ}/${fname}_1.fastq.gz -2 ${PATH_TO_FASTQ}/${fname}_2.fastq.gz -s ${PATH_TO_FASTQ}/${fname}_singleton.fastq.gz -0 ${PATH_TO_FASTQ}/${fname}_ambiguous.fastq.gz ${PATH_TO_FASTQ}/${fname}_sorted.${TYPE}
 
 		rm ${PATH_TO_FASTQ}/${fname}_sorted.${TYPE}
@@ -33,6 +33,6 @@ else
 		printf "Finished converting ${fname}. END: $(date)\n"
 
 	done
-	chmod 775 ${PATH_TO_FASTQ}/*.fastq.gz
+	chmod 770 ${PATH_TO_FASTQ}/*.fastq.gz
 
 fi

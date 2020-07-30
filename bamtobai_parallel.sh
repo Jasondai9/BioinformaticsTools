@@ -5,4 +5,4 @@
 
 BAMS=$1
 
-parallel samtools index ::: $BAMS
+parallel samtools index ::: "$BAMS"
