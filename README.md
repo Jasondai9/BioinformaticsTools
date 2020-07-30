@@ -1,6 +1,9 @@
 # A collection of short scripts for use with the ConsensusVariantCaller pipeline
 Authors: Jason Dai, Frances Keer, Evelyn Tong, Phoebe He
 
+# Bam to fastq conclusions:
+samtools fastq is the best combination of speed and accuracy.
+
 # specific_generate_scripts.sh  
 Generates the submits folder that contains all the scripts pertaining to a project. This uses specific_CVC_script_generator.sh and the template check scripts (stage 1, 2, and 3), so please be sure you have an up-to-date version of those. Ignore the mkdir or chmod errors; they are unimportant.
 ### Usage  
