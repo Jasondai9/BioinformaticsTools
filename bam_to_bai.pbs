@@ -1,0 +1,15 @@
+#PBS -q home-alexandrov
+#PBS -l nodes=1:ppn=28:skylake
+#PBS -l walltime=120:00:00
+#PBS -m bea
+#PBS -M jasondai.dev@gmail.com
+#PBS -o bamtobai.o
+#PBS -e bamtobai.e
+#PBS -N bamtobai
+#PBS -V
+
+
+
+/usr/bin/time -v sh -c '
+parallel samtools index ::: /restricted/alexandrov-group/jad054/debug/bam2fq/{{biobambam,samtools}/project,original_project}/bam/Sample100[26][NT].bam
+'
