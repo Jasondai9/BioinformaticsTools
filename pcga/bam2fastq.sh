@@ -1,6 +1,6 @@
 #!/bin/bash
 
-if [ -f "$2" ]; then
+if [ ! -f "$2" ]; then
     USAGE="\nUSAGE:\tsamtools_fastq.sh \\ \n\t[PATH_TO_FASTQ_DIR] \\ \n\t[PATH_TO_BAM] \\ \n\t[bam or cram. default: bam]
 	Path to BAM directory should be a folder containing BAM files 
 	Can optionally pass in a txt file containing path to the files \n\n"
