@@ -18,9 +18,9 @@ fi
 
 mkdir -p $PATH_TO_FASTQ_DIR
 
-fname=`basename $f .${TYPE}`
+fname=`basename $PATH_TO_BAM .${TYPE}`
 
-samtools sort -n -o ${PATH_TO_FASTQ_DIR}/${fname}_sorted.${TYPE} -@$(nproc) $f
+samtools sort -n -o ${PATH_TO_FASTQ_DIR}/${fname}_sorted.${TYPE} -@$(nproc) $PATH_TO_BAM
 samtools fastq -1 ${PATH_TO_FASTQ_DIR}/${fname}_1.fastq.gz -2 ${PATH_TO_FASTQ_DIR}/${fname}_2.fastq.gz -s ${PATH_TO_FASTQ_DIR}/${fname}_singleton.fastq.gz -0 ${PATH_TO_FASTQ_DIR}/${fname}_ambiguous.fastq.gz ${PATH_TO_FASTQ_DIR}/${fname}_sorted.${TYPE}
 
 rm ${PATH_TO_FASTQ_DIR}/${fname}_sorted.${TYPE}
